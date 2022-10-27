@@ -4,7 +4,7 @@ Click [**here**](https://BeyzaaKoroglu.github.io/React-MarkdownPreviewer/) for L
 
 ### TECHNOLOGIES
 
-- Marked
+- React Markdown
 - Redux
 - Redux Toolkit
 - Styled Components
