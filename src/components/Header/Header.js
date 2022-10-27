@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setHelp } from "../../redux/texts/textsSlice";
 import { Styled } from "./Header.styled";
 
 const Header = () => {
-  const [help, setHelp] = useState(false);
+  const help = useSelector((state) => state.texts.help);
+  const dispatch = useDispatch();
 
   const handleClick = () => {
-    setHelp(!help);
+    dispatch(setHelp());
   };
   return (
     <Styled>

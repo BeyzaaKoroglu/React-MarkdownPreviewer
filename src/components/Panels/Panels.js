@@ -1,45 +1,31 @@
 import { marked } from "marked";
-import React from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { changeUserText, setCurrentText } from "../../redux/texts/textsSlice";
 import { Styled } from "./Panels.styled";
 
 const Panels = () => {
-  const textCurrent = `Heading
-  =======
-  
-  Sub-heading
-  -----------
-  
-  ### Another deeper heading
-  
-  Paragraphs are separated
-  by a blank line.
-  
-  Leave 2 spaces at the end of a line to do a
-  line break
-  
-  Text attributes *italic*, **bold**,
-  \`monospace\`, ~~strikethrough~~ .
-  
-  Shopping list:
-  
-    * apples
-    * oranges
-    * pears
-  
-  Numbered list:
-  
-    1. apples
-    2. oranges
-    3. pears
-  
-  The rain---not the reign---in
-  Spain.`;
-
-  const parsedText = marked(textCurrent, { sanitize: true });
+  const dispatch = useDispatch();
+  const currentText = useSelector((state) => state.texts.currentText);
+  const help = useSelector((state) => state.texts.help);
+  const parsedText = marked(currentText, { sanitize: true });
   const processedText = { __html: parsedText };
+
+  useEffect(() => {
+    dispatch(setCurrentText());
+  }, [help]);
+
+  const handleChange = (e) => {
+    dispatch(changeUserText(e.target.value));
+  };
   return (
     <Styled>
-      <textarea value={textCurrent} className="text-panel-left" />
+      <textarea
+        value={currentText}
+        onChange={handleChange}
+        readOnly={help}
+        className="text-panel-left"
+      />
       <div
         dangerouslySetInnerHTML={processedText}
         className="text-panel-right"
